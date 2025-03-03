@@ -1,0 +1,231 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0a0a2a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.space-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.5) 1px, transparent 1px),
+                radial-gradient(circle at center, rgba(255,255,255,0.3) 2px, transparent 2px),
+                radial-gradient(circle at center, rgba(0,255,255,0.3) 1px, transparent 1px);
+    background-size: 50px 50px, 80px 80px, 70px 70px;
+    animation: starTwinkle 3s infinite linear;
+}
+
+.stars::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.4) 1px, transparent 1px),
+                radial-gradient(circle at center, rgba(0,255,255,0.2) 2px, transparent 2px);
+    background-size: 40px 40px, 60px 60px;
+    animation: starTwinkle 4s infinite linear;
+}
+
+.comets {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.comet {
+    position: absolute;
+    background: linear-gradient(45deg, rgba(255,255,255,0.8), transparent);
+    width: 100px;
+    height: 2px;
+    transform: rotate(-45deg);
+    filter: blur(1px);
+    animation: cometFall 10s linear infinite;
+}
+
+.galaxies {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.galaxy {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle at center, 
+        rgba(255,255,255,0.4), 
+        rgba(100,149,237,0.3) 20%, 
+        rgba(0,255,255,0.2) 40%, 
+        transparent 70%);
+    border-radius: 50%;
+    filter: blur(3px);
+    opacity: 0.7;
+    animation: galaxyPulse 8s infinite ease-in-out;
+}
+
+.game-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    z-index: 1;
+}
+
+#gameCanvas {
+    width: 100%;
+    background-color: rgba(0, 0, 51, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.score {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    color: #fff;
+    font-size: 24px;
+    z-index: 1;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.developer-link {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-family: 'Arial', sans-serif;
+}
+
+.developer-link a {
+    color: #00ffff;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 10px 20px;
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    border-radius: 20px;
+    background: rgba(0, 0, 51, 0.4);
+    transition: all 0.3s ease;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5),
+                 0 0 20px rgba(0, 255, 255, 0.3),
+                 0 0 30px rgba(0, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2),
+                inset 0 0 15px rgba(0, 255, 255, 0.2);
+}
+
+.developer-link a:hover {
+    color: #fff;
+    border-color: rgba(0, 255, 255, 0.8);
+    background: rgba(0, 255, 255, 0.2);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                 0 0 20px rgba(0, 255, 255, 0.5),
+                 0 0 30px rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4),
+                inset 0 0 20px rgba(0, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+
+#startButton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px 30px;
+    font-size: 20px;
+    background-color: rgba(0, 255, 255, 0.2);
+    border: 2px solid #00ffff;
+    border-radius: 25px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#startButton:hover {
+    background-color: rgba(0, 255, 255, 0.4);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+.touch-area {
+    display: none;
+    width: 100%;
+    height: 100px;
+    background: rgba(0, 255, 255, 0.1);
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    border-radius: 15px;
+    margin-top: 20px;
+    position: relative;
+    touch-action: none;
+}
+
+.touch-hint {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    pointer-events: none;
+}
+
+@keyframes starTwinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes cometFall {
+    0% {
+        transform: translate(-100px, -100px) rotate(-45deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(120vw, 120vh) rotate(-45deg);
+        opacity: 0;
+    }
+}
+
+@keyframes galaxyPulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.2); opacity: 0.9; }
+}
+
+@media (max-width: 768px) {
+    .touch-area {
+        display: block;
+    }
+    
+    .game-container {
+        padding: 10px;
+    }
+    
+    .score {
+        top: 20px;
+        left: 20px;
+        font-size: 20px;
+    }
+} 
